@@ -78,6 +78,23 @@ These represent the training and validation data, sharded over 5 files each.
 You will also find the `$DATA_DIR/labels.txt` file which contains the mapping
 from integer labels to class names.
 
+I provide a user friendly version of tfrecord generation solution here.
+```shell
+# Create directories that name after the labels, then put the images under the label folders.
+# ls /path/to/your/dataset/
+# label0, label1, label2, ...
+# ls /path/to/your/dataset/label0
+# label0_image0.jpg, label0_image1.jpg, ...
+#
+# Image file name doesn't really matter.
+DATASET_DIR=/path/to/your/own/dataset/
+
+# Convert the customized data into tfrecords. Be noted that the dataset_name must be "customized"!
+python convert_customized_data.py \
+    --dataset_name=customized \
+    --dataset_dir="${DATA_DIR}"
+```
+
 ### Train from scratch
 ```shell
 DATASET_DIR=/tmp/data/flowers
