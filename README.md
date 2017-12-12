@@ -92,7 +92,7 @@ DATASET_DIR=/path/to/your/own/dataset/
 # Convert the customized data into tfrecords. Be noted that the dataset_name must be "customized"!
 python convert_customized_data.py \
     --dataset_name=customized \
-    --dataset_dir="${DATA_DIR}"
+    --dataset_dir="${DATASET_DIR}"
 ```
 
 ### Train from scratch
