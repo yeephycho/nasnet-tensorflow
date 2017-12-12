@@ -15,7 +15,7 @@ With this repo., you should be able to:
 
 - Test and evaluate the model you have trained.
 
-- Deploy the model for your application. (By your self)
+- Deploy the model for your application ore transfer the feature extractor part to other problems such as object detection. (By yourself)
 
 Suitable for those who have solid CNN knowledge, python and tensorflow background. For those who have less background, [tensorflow slim walk through tutorial](https://github.com/tensorflow/models/blob/master/research/slim/slim_walkthrough.ipynb) should be a good start.
 
@@ -66,7 +66,19 @@ These represent the training and validation data, sharded over 5 files each.
 You will also find the `$DATA_DIR/labels.txt` file which contains the mapping
 from integer labels to class names.
 
-
+3. Train from scratch
+```shell
+DATASET_DIR=/tmp/data/flowers
+TRAIN_DIR=./train
+```
+```python
+python train_image_classifier.py \
+    --train_dir=${TRAIN_DIR} \
+    --dataset_name=flowers \
+    --dataset_split_name=train \
+    --dataset_dir=${DATASET_DIR} \
+    --model_name=nasnet_mobile
+```
 
 
 ## Code coming soon
