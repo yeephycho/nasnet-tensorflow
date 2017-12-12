@@ -79,6 +79,13 @@ You will also find the `$DATA_DIR/labels.txt` file which contains the mapping
 from integer labels to class names.
 
 I provide a user friendly version of tfrecord generation solution here.
+All you need to modify is located at 
+```shell
+datasets/customized.py
+```
+Line 36, the number for training set and test set.
+Line 39, the number of total classes.
+
 ```shell
 # Create directories that name after the labels, then put the images under the label folders.
 # ls /path/to/your/dataset/
