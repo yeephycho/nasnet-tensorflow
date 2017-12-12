@@ -101,5 +101,5 @@ ENV/
 .mypy_cache/
 
 # Others
-pre-trained/
-train/
+pre-trained/*
+train/*
