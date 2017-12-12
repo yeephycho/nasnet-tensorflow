@@ -29,12 +29,12 @@ numpy
 
 
 ## Usage
-1. Clone the repo.
+### Clone the repo.
 ```shell
 git clone https://github.com/yeephycho/nasnet-tensorflow.git
 ```
 
-2. Download and converting to TFRecord format (This part is the same as tf.slim tutorial)
+### Download and converting to TFRecord format (This part is the same as tf.slim tutorial)
 For each dataset, we'll need to download the raw data and convert it to
 TensorFlow's native
 [TFRecord](https://www.tensorflow.org/versions/r0.10/api_docs/python/python_io.html#tfrecords-format-details)
@@ -66,17 +66,43 @@ These represent the training and validation data, sharded over 5 files each.
 You will also find the `$DATA_DIR/labels.txt` file which contains the mapping
 from integer labels to class names.
 
-3. Train from scratch
+### Train from scratch
 ```shell
 DATASET_DIR=/tmp/data/flowers
 TRAIN_DIR=./train
+
+# For Nasnet-a-mobile
 python train_image_classifier.py \
     --train_dir=${TRAIN_DIR} \
     --dataset_name=flowers \
     --dataset_split_name=train \
     --dataset_dir=${DATASET_DIR} \
     --model_name=nasnet_mobile
+
+# For Nasnet-a-large
+python train_image_classifier.py \
+    --train_dir=${TRAIN_DIR} \
+    --dataset_name=flowers \
+    --dataset_split_name=train \
+    --dataset_dir=${DATASET_DIR} \
+    --model_name=nasnet_large
 ```
+### Finetune from ImageNet pre-trained checkpoint
+```shell
+DATASET_DIR=/tmp/data/flowers
+TRAIN_DIR=./train
+
+# For Nasnet-a-mobile
+CHECKPOINT_PATH=./pre-trained/nasnet-a_mobile_04_10_2017/model.ckpt
+
+python train_image_classifier.py     --train_dir=${TRAIN_DIR}     --dataset_dir=${DATASET_DIR}     --dataset_name=flowers     --dataset_split_name=train     --model_name=nasnet_mobile     --checkpoint_path=${CHECKPOINT_PATH}     --checkpoint_exclude_scopes=final_layer,aux_7     --trainable_scopes=final_layer,aux_7
+
+# For Nasnet-a-large
+CHECKPOINT_PATH=./pre-trained/nasnet-a_large_04_10_2017/model.ckpt
+
+python train_image_classifier.py     --train_dir=${TRAIN_DIR}     --dataset_dir=${DATASET_DIR}     --dataset_name=flowers     --dataset_split_name=train     --model_name=nasnet_large     --checkpoint_path=${CHECKPOINT_PATH}     --checkpoint_exclude_scopes=final_layer,aux_11     --trainable_scopes=final_layer,aux_11
+```
+
 
 
 ## Code coming soon
