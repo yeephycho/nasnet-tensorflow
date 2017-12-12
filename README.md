@@ -70,8 +70,6 @@ from integer labels to class names.
 ```shell
 DATASET_DIR=/tmp/data/flowers
 TRAIN_DIR=./train
-```
-```python
 python train_image_classifier.py \
     --train_dir=${TRAIN_DIR} \
     --dataset_name=flowers \
