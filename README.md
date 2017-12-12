@@ -84,6 +84,7 @@ All you need to modify is located at
 datasets/customized.py
 ```
 Line 36, the number for training set and test set.
+
 Line 39, the number of total classes.
 
 ```shell
@@ -158,9 +159,11 @@ python train_image_classifier.py \
 ```
 
 ### Evaluation
+A nasnet finetuned model for flowers dataset can be downloaded [here](https://drive.google.com/open?id=1l_hhQoE6T4rc69OpRMJ8geQXzgTnXqUC) from google drive.
+
 ```shell
 # Please specify the model.ckpt-xxxx file by yourself, for example
-CHECKPOINT_FILE=./train/model.ckpt-16547
+CHECKPOINT_FILE=./train/model.ckpt-29735
 
 # For Nasnet-a-mobile
 python eval_image_classifier.py \
@@ -188,4 +191,5 @@ tensorboard --logdir=./train
 
 ## Reference
 [Learning Transferable Architectures for Scalable Image Recognition](https://arxiv.org/abs/1707.07012)
+[tf.contrib.slim](https://github.com/tensorflow/models/tree/master/research/slim)
 
