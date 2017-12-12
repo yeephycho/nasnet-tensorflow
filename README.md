@@ -9,13 +9,13 @@ Nasnet is so far the state-of-the-art image classification architecture on Image
 
 With this repo., you should be able to:
 
-- Train a nasnet for customized dataset for image classification problem from scratch. (If you want)
+- Train a nasnet with customized dataset for image classification task from scratch. (If you want)
 
-- Finetune nasnet (nasnet-a-large, nasnet-a-mobile) from a pre-train model for image classification.
+- Finetune nasnet (nasnet-a-large, nasnet-a-mobile) from ImageNet pre-train model for image classification task.
 
 - Test and evaluate the model you have trained.
 
-- Deploy the model for your application or transfer the feature extractor part to other problems such as object detection. (By yourself)
+- Deploy the model for your application or transfer the feature extractor to other tasks such as object detection. (By yourself)
 
 Suitable for those who have solid CNN knowledge, python and tensorflow background. For those who have less background, [tensorflow slim walk through tutorial](https://github.com/tensorflow/models/blob/master/research/slim/slim_walkthrough.ipynb) should be a good start.
 
@@ -35,14 +35,17 @@ git clone https://github.com/yeephycho/nasnet-tensorflow.git
 ```
 
 ### Download and converting to TFRecord format (This part is the same as tf.slim tutorial)
-Many people would be interested in training Nasnet for their own data. I'm not sure this is a good idea for me to promote my repo. by using a dataset that provided by google's tutorial. Many people see the tfrecord generation code is just a copy of tensorflow's solution, they just give up and send me an e-mail and ask me how to train on their own dataset as I promised. However, if you can spend some time on the code, you would be able to find out that it may not very easy to hard code the tfrecord generation part by yourself but it's really easy for you to modify the template code. So flower dataset is a very very good template for you to modify. So, before send me e-mail to ask, please spend half a hour on the following scripts:
+Many people would be interested in training Nasnet with their own data. I'm not sure whether it's a good idea to promote my repo. by using a dataset that provided by google's tutorial. Many people see the tfrecord generation code is a copy of tensorflow's solution, they just give up or send me an e-mail to ask how to train on customized dataset as I promised. However, if you spend some time on code, you would be able to find out that it may not be very easy to hard coding the tfrecord generation script by yourself but it's really easy for you to modify the template code and flower dataset is a very very good template for you to modify. So, before sending me e-mail, please spend half a hour on the following scripts:
 ```shell
 train_image_classifier.py
+download_and_convert_data.py
 datasets/dataset_factory.py
 datasets/download_and_convert_flowers.py
 datasets/flowers.py
 ```
-Just by modify a few characters, you would be able to turn your own dataset into tfrecords.
+Just by modifing a few characters, you would be able to turn your own dataset into tfrecords.
+
+The following instruction will lead you to generate tutorial tfrecords.
 
 For each dataset, we'll need to download the raw data and convert it to
 TensorFlow's native
