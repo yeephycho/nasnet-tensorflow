@@ -87,22 +87,69 @@ python train_image_classifier.py \
     --dataset_dir=${DATASET_DIR} \
     --model_name=nasnet_large
 ```
+
 ### Finetune from ImageNet pre-trained checkpoint
 ```shell
+# This script will down pre-trained model from google, mv the file to pre-trained folder and unzip the file.
+sh download_pretrained_model.sh
+
 DATASET_DIR=/tmp/data/flowers
 TRAIN_DIR=./train
 
 # For Nasnet-a-mobile
 CHECKPOINT_PATH=./pre-trained/nasnet-a_mobile_04_10_2017/model.ckpt
-
-python train_image_classifier.py     --train_dir=${TRAIN_DIR}     --dataset_dir=${DATASET_DIR}     --dataset_name=flowers     --dataset_split_name=train     --model_name=nasnet_mobile     --checkpoint_path=${CHECKPOINT_PATH}     --checkpoint_exclude_scopes=final_layer,aux_7     --trainable_scopes=final_layer,aux_7
+python train_image_classifier.py \
+    --train_dir=${TRAIN_DIR} \
+    --dataset_dir=${DATASET_DIR} \
+    --dataset_name=flowers \
+    --dataset_split_name=train \
+    --model_name=nasnet_mobile \
+    --checkpoint_path=${CHECKPOINT_PATH} \
+    --checkpoint_exclude_scopes=final_layer,aux_7 \
+    --trainable_scopes=final_layer,aux_7
 
 # For Nasnet-a-large
 CHECKPOINT_PATH=./pre-trained/nasnet-a_large_04_10_2017/model.ckpt
-
-python train_image_classifier.py     --train_dir=${TRAIN_DIR}     --dataset_dir=${DATASET_DIR}     --dataset_name=flowers     --dataset_split_name=train     --model_name=nasnet_large     --checkpoint_path=${CHECKPOINT_PATH}     --checkpoint_exclude_scopes=final_layer,aux_11     --trainable_scopes=final_layer,aux_11
+python train_image_classifier.py \
+    --train_dir=${TRAIN_DIR} \
+    --dataset_dir=${DATASET_DIR} \
+    --dataset_name=flowers \
+    --dataset_split_name=train \
+    --model_name=nasnet_large \
+    --checkpoint_path=${CHECKPOINT_PATH} \
+    --checkpoint_exclude_scopes=final_layer,aux_11 \
+    --trainable_scopes=final_layer,aux_11
 ```
 
+### Evaluation
+```shell
+# Please specify the model.ckpt-xxxx file by yourself, for example
+CHECKPOINT_FILE=./train/model.ckpt-16547
 
+# For Nasnet-a-mobile
+python eval_image_classifier.py \
+    --alsologtostderr \
+    --checkpoint_path=${CHECKPOINT_FILE} \
+    --dataset_dir=/tmp/data/flowers \
+    --dataset_name=flowers \
+    --dataset_split_name=validation \
+    --model_name=nasnet_mobile
 
-## Code coming soon
+# For Nasnet-a-large
+python eval_image_classifier.py \
+    --alsologtostderr \
+    --checkpoint_path=${CHECKPOINT_FILE} \
+    --dataset_dir=/tmp/data/flowers \
+    --dataset_name=flowers \
+    --dataset_split_name=validation \
+    --model_name=nasnet_large
+```
+
+### Visualize the training progress
+```shell
+tensorboard --logdir=./train
+```
+
+## Reference
+[Learning Transferable Architectures for Scalable Image Recognition](https://arxiv.org/abs/1707.07012)
+
