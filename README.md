@@ -29,9 +29,11 @@ numpy
 
 
 ## Usage
-### Clone the repo.
+### Clone the repo and enter workspace.
 ```shell
 git clone https://github.com/yeephycho/nasnet-tensorflow.git
+cd nasnet-tensorflow
+mkdir train pre-trained
 ```
 
 ### Download and converting to TFRecord format (This part is the same as tf.slim tutorial)
@@ -127,7 +129,7 @@ python train_image_classifier.py \
 
 ### Finetune from ImageNet pre-trained checkpoint
 ```shell
-# This script will down pre-trained model from google, mv the file to pre-trained folder and unzip the file.
+# This script will download pre-trained model from google, mv the file to pre-trained folder and unzip the file.
 sh download_pretrained_model.sh
 
 DATASET_DIR=/tmp/data/flowers
