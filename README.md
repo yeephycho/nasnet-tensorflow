@@ -107,13 +107,13 @@ python convert_customized_data.py \
 
 ### Train from scratch
 ```shell
-DATASET_DIR=/tmp/data/flowers
+DATASET_DIR=/tmp/data/flowers # /path/to/your/own/dataset/
 TRAIN_DIR=./train
 
 # For Nasnet-a-mobile
 python train_image_classifier.py \
     --train_dir=${TRAIN_DIR} \
-    --dataset_name=flowers \
+    --dataset_name=flowers \ # customized
     --dataset_split_name=train \
     --dataset_dir=${DATASET_DIR} \
     --model_name=nasnet_mobile
@@ -121,7 +121,7 @@ python train_image_classifier.py \
 # For Nasnet-a-large
 python train_image_classifier.py \
     --train_dir=${TRAIN_DIR} \
-    --dataset_name=flowers \
+    --dataset_name=flowers \ # customized
     --dataset_split_name=train \
     --dataset_dir=${DATASET_DIR} \
     --model_name=nasnet_large
@@ -132,7 +132,7 @@ python train_image_classifier.py \
 # This script will download pre-trained model from google, mv the file to pre-trained folder and unzip the file.
 sh download_pretrained_model.sh
 
-DATASET_DIR=/tmp/data/flowers
+DATASET_DIR=/tmp/data/flowers # /path/to/your/own/dataset/
 TRAIN_DIR=./train
 
 # For Nasnet-a-mobile
@@ -140,7 +140,7 @@ CHECKPOINT_PATH=./pre-trained/nasnet-a_mobile_04_10_2017/model.ckpt
 python train_image_classifier.py \
     --train_dir=${TRAIN_DIR} \
     --dataset_dir=${DATASET_DIR} \
-    --dataset_name=flowers \
+    --dataset_name=flowers \ # customized
     --dataset_split_name=train \
     --model_name=nasnet_mobile \
     --checkpoint_path=${CHECKPOINT_PATH} \
@@ -152,7 +152,7 @@ CHECKPOINT_PATH=./pre-trained/nasnet-a_large_04_10_2017/model.ckpt
 python train_image_classifier.py \
     --train_dir=${TRAIN_DIR} \
     --dataset_dir=${DATASET_DIR} \
-    --dataset_name=flowers \
+    --dataset_name=flowers \ # customized
     --dataset_split_name=train \
     --model_name=nasnet_large \
     --checkpoint_path=${CHECKPOINT_PATH} \
@@ -171,7 +171,7 @@ CHECKPOINT_FILE=./train/model.ckpt-29735
 python eval_image_classifier.py \
     --alsologtostderr \
     --checkpoint_path=${CHECKPOINT_FILE} \
-    --dataset_dir=/tmp/data/flowers \
+    --dataset_dir=/tmp/data/flowers \ # customized
     --dataset_name=flowers \
     --dataset_split_name=validation \
     --model_name=nasnet_mobile
@@ -180,7 +180,7 @@ python eval_image_classifier.py \
 python eval_image_classifier.py \
     --alsologtostderr \
     --checkpoint_path=${CHECKPOINT_FILE} \
-    --dataset_dir=/tmp/data/flowers \
+    --dataset_dir=/tmp/data/flowers \ # customized
     --dataset_name=flowers \
     --dataset_split_name=validation \
     --model_name=nasnet_large
@@ -193,5 +193,6 @@ tensorboard --logdir=./train
 
 ## Reference
 [Learning Transferable Architectures for Scalable Image Recognition](https://arxiv.org/abs/1707.07012)
+
 [tf.contrib.slim](https://github.com/tensorflow/models/tree/master/research/slim)
 
