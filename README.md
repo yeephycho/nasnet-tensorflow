@@ -85,9 +85,15 @@ All you need to modify is located at
 ```shell
 datasets/customized.py
 ```
-Line 36, the number for training set and test set.
+Line 36, the number of training set and validation (test) set.
 
 Line 39, the number of total classes.
+
+```shell
+datasets/convert_customized.py
+```
+Line 61, the number of validation (test) set.
+
 
 ```shell
 # Create directories that name after the labels, then put the images under the label folders.
@@ -111,17 +117,19 @@ DATASET_DIR=/tmp/data/flowers # /path/to/your/own/dataset/
 TRAIN_DIR=./train
 
 # For Nasnet-a-mobile
+# --dataset_name=customized
 python train_image_classifier.py \
     --train_dir=${TRAIN_DIR} \
-    --dataset_name=flowers \ # customized
+    --dataset_name=flowers \
     --dataset_split_name=train \
     --dataset_dir=${DATASET_DIR} \
     --model_name=nasnet_mobile
 
 # For Nasnet-a-large
+# --dataset_name=customized
 python train_image_classifier.py \
     --train_dir=${TRAIN_DIR} \
-    --dataset_name=flowers \ # customized
+    --dataset_name=flowers \
     --dataset_split_name=train \
     --dataset_dir=${DATASET_DIR} \
     --model_name=nasnet_large
@@ -136,11 +144,12 @@ DATASET_DIR=/tmp/data/flowers # /path/to/your/own/dataset/
 TRAIN_DIR=./train
 
 # For Nasnet-a-mobile
+# --dataset_name=customized
 CHECKPOINT_PATH=./pre-trained/nasnet-a_mobile_04_10_2017/model.ckpt
 python train_image_classifier.py \
     --train_dir=${TRAIN_DIR} \
     --dataset_dir=${DATASET_DIR} \
-    --dataset_name=flowers \ # customized
+    --dataset_name=flowers \
     --dataset_split_name=train \
     --model_name=nasnet_mobile \
     --checkpoint_path=${CHECKPOINT_PATH} \
@@ -148,11 +157,12 @@ python train_image_classifier.py \
     --trainable_scopes=final_layer,aux_7
 
 # For Nasnet-a-large
+# --dataset_name=customized
 CHECKPOINT_PATH=./pre-trained/nasnet-a_large_04_10_2017/model.ckpt
 python train_image_classifier.py \
     --train_dir=${TRAIN_DIR} \
     --dataset_dir=${DATASET_DIR} \
-    --dataset_name=flowers \ # customized
+    --dataset_name=flowers \
     --dataset_split_name=train \
     --model_name=nasnet_large \
     --checkpoint_path=${CHECKPOINT_PATH} \
@@ -168,19 +178,21 @@ A nasnet finetuned model for flowers dataset can be downloaded [here](https://dr
 CHECKPOINT_FILE=./train/model.ckpt-29735
 
 # For Nasnet-a-mobile
+# --dataset_name=customized
 python eval_image_classifier.py \
     --alsologtostderr \
     --checkpoint_path=${CHECKPOINT_FILE} \
-    --dataset_dir=/tmp/data/flowers \ # customized
+    --dataset_dir=/tmp/data/flowers \
     --dataset_name=flowers \
     --dataset_split_name=validation \
     --model_name=nasnet_mobile
 
 # For Nasnet-a-large
+# --dataset_name=customized
 python eval_image_classifier.py \
     --alsologtostderr \
     --checkpoint_path=${CHECKPOINT_FILE} \
-    --dataset_dir=/tmp/data/flowers \ # customized
+    --dataset_dir=/tmp/data/flowers \
     --dataset_name=flowers \
     --dataset_split_name=validation \
     --model_name=nasnet_large
