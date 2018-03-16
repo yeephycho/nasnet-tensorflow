@@ -103,3 +103,4 @@ ENV/
 # Others
 pre-trained/*
 train/*
+inference/*

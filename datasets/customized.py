@@ -33,10 +33,10 @@ _FILE_PATTERN = 'customized_%s_*.tfrecord'
 
 
 # training set size and validation set size.
-SPLITS_TO_SIZES = {'train': 3320, 'validation': 350}
+SPLITS_TO_SIZES = {'train': 0, 'validation': 179}
 
 # Set number of classes
-_NUM_CLASSES = 5
+_NUM_CLASSES = 8
 
 _ITEMS_TO_DESCRIPTIONS = {
     'image': 'A color image of varying size.',

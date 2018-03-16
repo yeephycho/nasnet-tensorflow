@@ -203,6 +203,52 @@ python eval_image_classifier.py \
 tensorboard --logdir=./train
 ```
 
+
+### Export inference model
+
+## Export static computation graph
+
+Find file export_inference_graph.py
+
+Change line 112, num_classes=5 (For flowers dataset, change this parameter according to your own dataset)
+
+
+```shell
+# For large model
+python export_inference_graph.py \
+  --alsologtostderr \
+  --model_name=nasnet_large \
+  --output_file=./inference/nasnet_large_inf_graph.pb
+
+# For mobile model
+python export_inference_graph.py \
+  --alsologtostderr \
+  --model_name=nasnet_mobile \
+  --output_file=./inference/nasnet_mobile_inf_graph.pb
+```
+
+## Freeze the graph and checkpoint model
+
+```shell
+# For large model
+python freeze_graph.py \
+  --input_graph=./inference/nasnet_large_inf_graph.pb \
+  --input_checkpoint=./train/model.ckpt-16547 \
+  --input_binary=true \
+  --output_graph=./inference/frozen_nasnet_large.pb \
+  --output_node_names=final_layer/predictions
+
+# For mobile model
+python freeze_graph.py \
+  --input_graph=./inference/nasnet_mobile_inf_graph.pb \
+  --input_checkpoint=./train/yourOwnModel.ckpt-xxxx \
+  --input_binary=true \
+  --output_graph=./inference/frozen_nasnet_mobile.pb \
+  --output_node_names=final_layer/predictions
+```
+
+
+
 ## Reference
 [Learning Transferable Architectures for Scalable Image Recognition](https://arxiv.org/abs/1707.07012)
 

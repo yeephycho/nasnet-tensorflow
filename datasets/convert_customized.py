@@ -58,7 +58,7 @@ from datasets import dataset_utils
 
 # The number of images in the validation set.
 # You should change this number for customized dataset according to your own purpose.
-_NUM_VALIDATION = 350
+_NUM_VALIDATION = 179
 
 # Seed for repeatability.
 _RANDOM_SEED = 0

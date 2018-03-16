@@ -108,7 +108,8 @@ def main(_):
                                           FLAGS.dataset_dir)
     network_fn = nets_factory.get_network_fn(
         FLAGS.model_name,
-        num_classes=(dataset.num_classes - FLAGS.labels_offset),
+        # num_classes=(dataset.num_classes - FLAGS.labels_offset),
+        num_classes=5,
         is_training=FLAGS.is_training)
     image_size = FLAGS.image_size or network_fn.default_image_size
     placeholder = tf.placeholder(name='input', dtype=tf.float32,
