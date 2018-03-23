@@ -204,9 +204,9 @@ tensorboard --logdir=./train
 ```
 
 
-### Export inference model
+### Inference
 
-## Export static computation graph
+#### Export static computation graph
 
 Find file export_inference_graph.py
 
@@ -227,7 +227,7 @@ python export_inference_graph.py \
   --output_file=./inference/nasnet_mobile_inf_graph.pb
 ```
 
-## Freeze the graph and checkpoint model
+#### Freeze the graph and checkpoint model
 
 ```shell
 # For large model
@@ -246,6 +246,21 @@ python freeze_graph.py \
   --output_graph=./inference/frozen_nasnet_mobile.pb \
   --output_node_names=final_layer/predictions
 ```
+
+#### Inference demo
+##### Note: 
+1. Make sure input image has a size that larger than 331 by 331, no resize operation for current input, you can add if you want.
+
+2. Only support jpeg for inference demo.
+
+3. Five crops inference strategy is adopted.
+
+```shell
+python image_inference.py
+```
+
+#### Output
+![Inference demo output](https://github.com/yeephycho/nasnet-tensorflow/blob/master/demo/output/demo_output.png?raw=true "Show result")
 
 
 
