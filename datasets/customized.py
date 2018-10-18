@@ -1,42 +1,18 @@
-# Copyright 2016 The TensorFlow Authors. All Rights Reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-# http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# ==============================================================================
-"""Provides data for the customized dataset.
-
-The dataset scripts used to create the dataset can be found at:
-tensorflow/models/research/slim/datasets/convert_customized_data.py
-"""
-
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-
 import os
 import tensorflow as tf
-
 from datasets import dataset_utils
-
 slim = tf.contrib.slim
+
+with open("/root/LandingNext_ic/datasets/parameters.txt", "r") as f:
+    _NUM_CLASSES = int(f.readline())
 
 _FILE_PATTERN = 'customized_%s_*.tfrecord'
 
+SPLITS_TO_SIZES = {'train': 10000000, 'validation': 0}
 
-# training set size and validation set size.
-SPLITS_TO_SIZES = {'train': 0, 'validation': 179}
-
-# Set number of classes
-_NUM_CLASSES = 8
 
 _ITEMS_TO_DESCRIPTIONS = {
     'image': 'A color image of varying size.',

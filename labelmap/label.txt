@@ -1,0 +1,4 @@
+0:bankcard
+1:idcard
+2:paper
+3:unknown

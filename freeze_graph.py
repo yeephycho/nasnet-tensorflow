@@ -1,38 +1,3 @@
-# Copyright 2015 The TensorFlow Authors. All Rights Reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# ==============================================================================
-r"""Converts checkpoint variables into Const ops in a standalone GraphDef file.
-
-This script is designed to take a GraphDef proto, a SaverDef proto, and a set of
-variable values stored in a checkpoint file, and output a GraphDef with all of
-the variable ops converted into const ops containing the values of the
-variables.
-
-It's useful to do this when we need to load a single file in C++, especially in
-environments like mobile or embedded where we may not have access to the
-RestoreTensor ops and file loading calls that they rely on.
-
-An example of command-line usage is:
-bazel build tensorflow/python/tools:freeze_graph && \
-bazel-bin/tensorflow/python/tools/freeze_graph \
---input_graph=some_graph_def.pb \
---input_checkpoint=model.ckpt-8361242 \
---output_graph=/tmp/frozen_graph.pb --output_node_names=softmax
-
-You can also look at freeze_graph_test.py for an example of how to use it.
-
-"""
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -277,7 +242,7 @@ def run_main():
   parser.add_argument(
       "--input_graph",
       type=str,
-      default="",
+      default="./inference/nasnet_large_inf_graph.pb",
       help="TensorFlow \'GraphDef\' file to load.")
   parser.add_argument(
       "--input_saver",
@@ -297,14 +262,14 @@ def run_main():
   parser.add_argument(
       "--output_graph",
       type=str,
-      default="",
+      default="./inference/frozen_nasnet_large.pb",
       help="Output \'GraphDef\' file name.")
   parser.add_argument(
       "--input_binary",
       nargs="?",
       const=True,
       type="bool",
-      default=False,
+      default=True,
       help="Whether the input files are in binary format.")
   parser.add_argument(
       "--output_node_names",
