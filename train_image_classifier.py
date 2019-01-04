@@ -3,7 +3,6 @@ from __future__ import division
 from __future__ import print_function
 
 import tensorflow as tf
-
 from datasets import dataset_factory
 from deployment import model_deploy
 from nets import nets_factory
@@ -54,10 +53,6 @@ tf.app.flags.DEFINE_integer(
 tf.app.flags.DEFINE_integer(
     'task', 0, 'Task id of the replica running the training.')
 
-######################
-# Optimization Flags #
-######################
-
 tf.app.flags.DEFINE_float(
     'weight_decay', 0.00004, 'The weight decay on the model weights.')
 
@@ -105,9 +100,6 @@ tf.app.flags.DEFINE_float('rmsprop_momentum', 0.9, 'Momentum.')
 
 tf.app.flags.DEFINE_float('rmsprop_decay', 0.9, 'Decay term for RMSProp.')
 
-#######################
-# Learning Rate Flags #
-#######################
 
 tf.app.flags.DEFINE_string(
     'learning_rate_decay_type',
@@ -178,10 +170,6 @@ tf.app.flags.DEFINE_integer(
 
 tf.app.flags.DEFINE_integer('max_number_of_steps', 100000,
                             'The maximum number of training steps.')
-
-#####################
-# Fine-Tuning Flags #
-#####################
 
 tf.app.flags.DEFINE_string(
     'checkpoint_path', None,
@@ -383,15 +371,11 @@ def main(_):
     with tf.device(deploy_config.variables_device()):
       global_step = slim.create_global_step()
 
-    ######################
-    # Select the dataset #
-    ######################
+    # get the dataset
     dataset = dataset_factory.get_dataset(
         FLAGS.dataset_name, FLAGS.dataset_split_name, FLAGS.dataset_dir)
 
-    ######################
-    # Select the network #
-    ######################
+    # get the network graph
     network_fn = nets_factory.get_network_fn(
         FLAGS.model_name,
         num_classes=(dataset.num_classes - FLAGS.labels_offset),
