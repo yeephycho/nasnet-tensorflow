@@ -390,9 +390,7 @@ def main(_):
         preprocessing_name,
         is_training=True)
 
-    ##############################################################
-    # Create a dataset provider that loads data from the dataset #
-    ##############################################################
+    # Create a dataset provider that loads data from the dataset
     with tf.device(deploy_config.inputs_device()):
       provider = slim.dataset_data_provider.DatasetDataProvider(
           dataset,
@@ -416,17 +414,13 @@ def main(_):
       batch_queue = slim.prefetch_queue.prefetch_queue(
           [images, labels], capacity=2 * deploy_config.num_clones)
 
-    ####################
-    # Define the model #
-    ####################
+    # Define the model
     def clone_fn(batch_queue):
       """Allows data parallelism by creating multiple clones of network_fn."""
       images, labels = batch_queue.dequeue()
       logits, end_points = network_fn(images)
 
-      #############################
-      # Specify the loss function #
-      #############################
+      # Specify the loss function
       if 'AuxLogits' in end_points:
         slim.losses.softmax_cross_entropy(
             end_points['AuxLogits'], labels,
@@ -520,10 +514,7 @@ def main(_):
     # Merge all summaries together.
     summary_op = tf.summary.merge(list(summaries), name='summary_op')
 
-
-    ###########################
-    # Kicks off the training. #
-    ###########################
+    # Kicks off the training.
     slim.learning.train(
         train_tensor,
         logdir=FLAGS.train_dir,

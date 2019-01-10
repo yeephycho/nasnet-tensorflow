@@ -1,7 +1,4 @@
 import os, time, json
-# Set log level
-os.environ['TF_CPP_MIN_LOG_LEVEL']='3'
-
 import tensorflow as tf
 import numpy as np
 
@@ -74,22 +71,20 @@ def predict(filename):
             [_image, _label, _filepath] = sess.run([image_data, label, filepath])
             _label=str(_label,encoding='utf-8')
             _filepath=str(_filepath,encoding='utf-8')
-            _image = tf.divide(_image, 255)
+
             _image = tf.image.resize_images(_image, [331, 331])
             _image = sess.run(_image)
             _image = np.asarray([_image])
             _image = _image.reshape(-1, 331, 331, 3)
-            # print(_image)
 
             with tf.device('/gpu:0'):
                 predictions = inference_session.run(output_layer, feed_dict={input_layer: _image})
-                # print(predictions)
             predictions = np.squeeze(predictions)
 
-            overall_result = sess.run(tf.argmax(predictions))
+            predictions = predictions.tolist()
+            overall_result = predictions.index(max(predictions))
+            print(overall_result)
             predict_result = label_map[overall_result].split(":")[-1]
-
-            if predict_result == 'unknown': continue
 
             content = {}
             content['prob'] = str(np.max(predictions))
@@ -105,8 +100,7 @@ def predict(filename):
 
 
 if __name__ == '__main__':
-
-    # read model and load model graph
+    os.environ['TF_CPP_MIN_LOG_LEVEL']='3'
     model_dir = "./model"
     model = "nasnet_large_v1.pb"
     model_path = os.path.join(model_dir, model)
@@ -119,39 +113,24 @@ if __name__ == '__main__':
             input_layer = model_graph.get_tensor_by_name("input:0")
             output_layer = model_graph.get_tensor_by_name('final_layer/predictions:0')
 
-    # Session Config
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
     inference_session = tf.Session(graph = model_graph, config=config)
-
-    # Initialize session
     initializer = np.zeros([1, 331, 331, 3])
     inference_session.run(output_layer, feed_dict={input_layer: initializer})
-
-    # Prediction
     file_list = []
     processed_files = []
-
-    for path, dir, files in os.walk('./model_output/processed_files'):
+    for path, dir, files in os.walk("./input_data"):
         for file in files:
-            processed_files.append(file.split('_')[0]+'.tfrecord')
+            if file == '.DS_Store': continue
+            print("Reading file {}".format(file))
+            file_path = os.path.join('./input_data', file)
+            file_list.append(file_path)
+            res = predict(file_path)
+            processed_files.append(file)
 
-    while True:
+    with open('./model_output/processed_files/test_{}_processed_files.json'.format(model), 'w') as f:
+        f.write(json.dumps(processed_files))
 
-        for path, dir, files in os.walk("./input_data"):
-            for file in files:
-                if file == '.DS_Store': continue
-                if file in processed_files: continue
-                print("Reading file {}".format(file))
-                file_path = os.path.join('./input_data', file)
-                file_list.append(file_path)
-                res = predict(file_path)
-                processed_files.append(file)
-
-                with open('./model_output/processed_files/{}_{}_processed_files.json'.format(file.split('.')[0], model.split('.')[0]), 'w') as f:
-                    f.write(json.dumps(processed_files))
-
-                with open('./model_output/classify_result/{}_{}_classify_result.json'.format(file.split('.')[0], model.split('.')[0]), 'w') as f:
-                    f.write(json.dumps(res, indent=4, separators=(',',':')))
-
-        time.sleep(1)
+    with open('./model_output/classify_result/test_{}_classify_result.json'.format(model), 'w') as f:
+        f.write(json.dumps(res, indent=4, separators=(',',':')))

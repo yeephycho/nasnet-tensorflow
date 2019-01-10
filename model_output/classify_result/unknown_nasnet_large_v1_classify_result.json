@@ -1,0 +1,7 @@
+[
+    {
+        "filepath":"unknown_00377.jpg",
+        "prob":"Tensor(\"Squeeze_68:0\", shape=(4,), dtype=float32)",
+        "label":"bankcard"
+    }
+]

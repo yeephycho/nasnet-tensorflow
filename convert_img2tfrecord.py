@@ -14,7 +14,7 @@ def _int64_feature(value):
 def image_to_tfexample(image_data,label,filepath):
     return tf.train.Example(features=tf.train.Features(feature={
         'image/encoded':bytes_feature(image_data),
-        'image/class/label':bytes_feature(bytes(label,encoding='utf-8')),
+        'image/class/label':bytes_feature(bytes(label, encoding='utf-8')),
         'image/filepath': bytes_feature(bytes(filepath, encoding='utf-8')),
     }))
 
@@ -60,7 +60,7 @@ class TFRecord:
         reader = tf.TFRecordReader()
         _, serialized_example = reader.read(filename_queue)
         features = tf.parse_single_example(serialized_example,features = {
-            'image/encoded': tf.FixedLenFeature([], tf.string),
+            'image/encoded': tf.FixedLenFeature((), tf.string),
             'image/class/label': tf.FixedLenFeature([], tf.string),
             'image/filepath': tf.FixedLenFeature([], tf.string),})
 
@@ -94,12 +94,15 @@ class TFRecord:
         return image_data_list,label_list,filepath_list
 
 if __name__== '__main__':
-    filename = "bankcard.tfrecord"
+    filename = "unknown.tfrecord"
     tf_data = TFRecord()
     tf_data.image_data_writer_open(filename)
-    for path, dir, files in os.walk("./bankcard"):
+    for path, dir, files in os.walk("./unknown"):
         for file in files:
-            image = Image.open(file)
+            if file == '.DS_Store': continue
+            image = Image.open(os.path.join("./unknown", file))
             image_arr = np.array(image)
-            tf_data.image_data_write_jpeg(image_arr, file, 'bankcard')
+            tf_data.image_data_write_jpeg(image_arr, file, 'unknown')
+            print("writing data from {}...".format(file))
     tf_data.image_data_writer_close()
+    print("Finish convertion.")

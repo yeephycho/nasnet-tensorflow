@@ -19,65 +19,29 @@ tensorflow:1.8.0-gpu
 
 ## 功能
 
-### 上传单张图片并识别
-url:localhost:5000/single
-key:file
-value:单张jpeg、png、webp
+### 预测tfrecord文件
+将tfrecord文件放入input_data目录并运行：
+>python3 predict.py
 
-输出示例：
-[
-    [
-        "/root/LandingNext_ic/upload/1539248532.26/paper_903.jpg",
-        "2:paper"
-    ]
-]
-
-### 上传多张图片并识别
-url:localhost:5000/folder
-key:file[]
-value:多张jpeg、png、webp
-
-输出示例：
-[
-    [
-        "/root/LandingNext_ic/upload/1539248532.26/paper_888.jpg",
-        "2:paper"
-    ],
-    [
-        "/root/LandingNext_ic/upload/1539248532.26/paper_903.jpg",
-        "2:paper"
-    ]
-]
-
-### 上传tfrecord文件并识别
-url:localhost:5000/binary
-key:file
-value:tfrecord文件
-
-输出示例：
-[
-    [
-        "/root/LandingNext_ic/upload/1539586491.5763912/convert/test_0.jpg",
-        "3:unknown"
-    ],
-    [
-        "/root/LandingNext_ic/upload/1539586491.5763912/convert/test_1.jpg",
-        "3:unknown"
-    ]
-]
+输出结果分别存储在
+`./model_output/processed_files/test_"$model"_processed_files.json`
+`./model_output/processed_files/test_"$model"_classify_result.json`
+文件中。
 
 ### 保存图片的分类
-将识别出来的图片放入save目录下对应的文件夹中
+将识别出来的图片放入save目录下对应的文件夹中。
 
 ### 增加新的分类并训练
 将/datasets/parameters.txt文件中的内容改为分类的总数。
 
 将数据按分类放入input_data文件夹下并将数据转为TFRecord格式：
->python download_and_convert_data.py
+>python3 download_and_convert_data.py
 
 执行本命令进行训练：
->python train_image_classifier.py
+>python3 train_image_classifier.py
 
 ### 固化模型
 模型名称为train文件夹下最新的模型
->python freeze_graph.py --input_checkpoint=./train/model.ckpt
+>python3 freeze_graph.py --input_checkpoint=./train/model.ckpt
+
+将训练好的模型放入model文件夹下，并在predict.py中第107行修改model名称即可使用。

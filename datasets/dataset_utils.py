@@ -146,5 +146,5 @@ def read_label_file(dataset_dir, filename=LABELS_FILENAME):
   labels_to_class_names = {}
   for line in lines:
     index = line.index(':')
-    labels_to_class_names[int(line[:index])] = line[index+1:]
+    labels_to_class_names[line[:index]] = line[index+1:]
   return labels_to_class_names
